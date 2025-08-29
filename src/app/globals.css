@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* @tailwind base;
+@tailwind components; */
+@tailwind utilities;  /* Fixed typo from 'taiilwind' */
+
+
+  @font-face {
+    font-family: 'peckham';
+    src: url('/fonts/peckhampress.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'opensaucefont';
+    src: url('/fonts/opensaucefont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Apply fonts globally */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'peckham', sans-serif;
+  }
+  
+  body, p, a, li, span, div {
+    font-family: 'opensaucefont', sans-serif;
+  }
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slider {
+  animation: slide 1s linear infinite;
+}
+
+/* Add these classes for the 3D card flip effect */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Add this to your existing CSS */
+html {
+  scroll-behavior: smooth;
+  /* Adjust scroll speed with longer transition timing */
+  --scroll-behavior: smooth;
+  scroll-timeline: --page-scroll block;
+  scroll-timeline-axis: block;
+}
+
+/* For Firefox */
+*{
+  scrollbar-behavior: smooth;
+  scroll-timeline: --page-scroll block;
+  scroll-timeline-axis: block;
+}
+
+/* Optional: add custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

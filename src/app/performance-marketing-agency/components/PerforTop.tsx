@@ -1,0 +1,146 @@
+'use client'
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+
+const PerforTop: React.FC = () => {
+  const [isH2Visible, setIsH2Visible] = useState(false);
+  const [isImageVisible, setIsImageVisible] = useState(false);
+  const [isP1Visible, setIsP1Visible] = useState(false);
+  const [isP2Visible, setIsP2Visible] = useState(false);
+  
+  const h2Ref = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const h2Observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsH2Visible(true);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
+
+    const imageObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsImageVisible(true);
+          // Trigger paragraphs with staggered delays
+          setTimeout(() => setIsP1Visible(true), 200);
+          setTimeout(() => setIsP2Visible(true), 400);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
+
+    const currentH2Ref = h2Ref.current;
+    const currentImageRef = imageRef.current;
+
+    if (currentH2Ref) {
+      h2Observer.observe(currentH2Ref);
+    }
+
+    if (currentImageRef) {
+      imageObserver.observe(currentImageRef);
+    }
+
+    return () => {
+      if (currentH2Ref) {
+        h2Observer.unobserve(currentH2Ref);
+      }
+      if (currentImageRef) {
+        imageObserver.unobserve(currentImageRef);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      {/* Performance Marketing Top Section Starts */}
+      <section id="1">
+        <div className="md:mt-50 mt-40 overflow-hidden">
+        <h1
+          ref={h2Ref}
+          className={`text-2xl px-1 text-center sm:text-3xl md:text-4xl lg:text-5xl w-full max-w-[1000px] mx-auto tracking-[.3px] text-[#E0D9CD] font-peckham transition-all duration-1000 ease-out ${
+            isH2Visible
+              ? "transform translate-y-0 opacity-100"
+              : "transform translate-y-16 opacity-0"
+          }`}
+        >
+          AI-Powered Performance Marketing Agency for Scalable Growth
+        </h1>
+
+        {/* Image Text Combine Div Starts */}
+        <div className="max-w-7xl mx-auto flex flex-col py-9 md:py-20 lg:flex-row items-center gap-10">
+          {/* Image Section */}
+          <div
+            ref={imageRef}
+            className={`w-full px-3 md:px-1 lg:w-1/2 transition-all duration-1000 ease-out ${
+              isImageVisible
+                ? "transform translate-y-0 opacity-100"
+                : "transform translate-y-16 opacity-0"
+            }`}
+          >
+            <div className="w-full overflow-hidden">
+              <Image
+                src="/images/pm1_image.webp"
+                alt="performance marketing agency"
+                className="relative z-10 w-full h-auto object-cover rounded-xl filter grayscale sepia-[0.1] contrast-[0.9] brightness-[1.01] transition duration-500 hover:grayscale-0 hover:sepia-[0.08] hover:contrast-[1.02] hover:brightness-[0.99]"
+                priority
+                width={400}
+                height={400}
+              />
+            </div>
+          </div>
+
+          {/* Text Section */}
+          <div className="w-full px-2 md:px-2 lg:w-1/2 space-y-4">
+            <p
+              className={`text-[16px] md:text-[18px] text-white transition-all font-medium duration-1000 ease-out ${
+                isP1Visible
+                  ? "transform translate-y-0 opacity-100"
+                  : "transform translate-y-16 opacity-0"
+              }`}
+            >
+              Stop wasting ad spend on empty impressions – start driving real
+              business growth. At Nuvoraa, we&apos;re a <span className="font-semibold">performance marketing agency</span> laser-focused on turning every click into a valuable lead or
+              sale. From targeted lead generation services to app installs and
+              conversions, our data-driven campaigns are designed to deliver
+              measurable ROI and fuel your business success. If you want
+              marketing that moves the needle, you&apos;re in the right place.
+            </p>
+            <p
+              className={`text-[16px] md:text-[18px] text-white font-medium transition-all duration-1000 ease-out ${
+                isP2Visible
+                  ? "transform translate-y-0 opacity-100"
+                  : "transform translate-y-16 opacity-0"
+              }`}
+            >
+              As a full-service media marketing agency, we combine cutting-edge
+              AI technology with creative innovation to deliver powerful,
+              performance-driven marketing solutions. Our tailored strategies
+              build smart, scalable funnels designed to maximize results across
+              multiple industries – from e-commerce and SaaS to fintech,
+              healthcare, and beyond. At Nuvoraa, performance marketing is at
+              the core of everything we do, turning data insights and creativity
+              into measurable growth. Expect digital marketing services that
+              don&apos;t just spend your budget but generate real ROI and accelerate
+              your business success.
+            </p>
+          </div>
+        </div>
+        {/* Image Text Combine Div Ends */}
+      </div>
+      </section>
+      {/* Performance Marketing Top Section Ends */}
+    </>
+  );
+};
+
+export default PerforTop;
