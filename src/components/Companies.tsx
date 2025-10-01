@@ -7,8 +7,8 @@ const Companies: React.FC = () => {
   const logos = [
     "/logos/cprelogo.png",
     "/logos/grayquestlogo.png",
-    "/logos/fms_logo.jpg",
-    "/logos/Maplelogo.jpg",
+    "/logos/fms_logo.webp",
+    "/logos/Maplelogo.webp",
     "/logos/makoons_logo.png",
     "/logos/guardianonelogo.png",
     "/logos/moh_logo.png",
