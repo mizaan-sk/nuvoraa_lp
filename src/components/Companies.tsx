@@ -11,8 +11,8 @@ const Companies: React.FC = () => {
     { src: "/logos/makoons_logo.png", pr: '20', invert: false },
     { src: "/logos/guardianonelogo.png", pr: '0', invert: true },
     { src: "/logos/moh_logo.png", pr: '0', invert: true },
-    { src: "/logos/fms_logo.webp", pr: '0', invert: false },
     { src: "/logos/radcliffe_logo.png", pr: '10', invert: true },
+    { src: "/logos/fms_logo.webp", pr: '0', invert: false },
   ];
 
   const extendedLogos = [...logos, ...logos];
@@ -35,20 +35,25 @@ const Companies: React.FC = () => {
               key={index}
               className="flex-shrink-0 flex items-center justify-center w-32 sm:w-40 md:w-48 lg:w-56 xl:w-60 h-20 sm:h-24 md:h-28 lg:h-32"
             >
-             <Image
+            <Image
   src={logo.src}
   alt={`Company logo ${(index % logos.length) + 1}`}
   width={240}
   height={120}
-  className={`w-full h-full object-contain transition-all duration-300 opacity-70 hover:opacity-100`}
+  className={`w-full h-full object-contain transition-all duration-300 ${
+    logo.src.includes("fms_logo") ? "opacity-80 hover:opacity-120" : "opacity-70 hover:opacity-100"
+  }`}
   style={{
     paddingRight: `${logo.pr}px`,
     filter: logo.invert
       ? "brightness(0) saturate(100%) invert(95%) sepia(7%) saturate(30%) hue-rotate(15deg) brightness(101%) contrast(97%)"
+      : logo.src.includes("fms_logo")
+      ? "grayscale(100%) brightness(111%) contrast(57%)"
       : "grayscale(100%)",
   }}
   priority={index < logos.length}
 />
+
 
             </div>
           ))}
