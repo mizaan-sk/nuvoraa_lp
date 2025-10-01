@@ -1,91 +1,57 @@
-'use client';
-import React from 'react';
-import Image from 'next/image';
+"use client";
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Companies: React.FC = () => {
   const logos = [
-    '/logos/outbrain.png',
-    '/logos/taboola.svg',
-    '/logos/mgid.png',
+    "/logos/cprelogo.png",
+    "/logos/grayquestlogo.png",
+    "/logos/fms_logo.webp",
+    "/logos/Maplelogo.webp",
+    "/logos/makoons_logo.png",
+    "/logos/guardianonelogo.png",
+    "/logos/moh_logo.png",
+    "/logos/radcliffe_logo.png",
   ];
 
+  // Double logos (infinite seamless effect needs at least 2 sets)
+  const extendedLogos = [...logos, ...logos];
+
   return (
-    <div className="w-full bg-black py-16 overflow-hidden">
+    <div className="w-full bg-black py-9 sm:py-10 md:py-12 overflow-hidden">
       <div className="relative w-full">
-        {/* Gradient Overlay - Left */}
-        <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-black to-transparent z-10"></div>
-        
-        {/* Logo Slider - Modified for continuous flow */}
-        <div className="flex space-x-16 sm:space-x-24 md:space-x-32 lg:space-x-48 whitespace-nowrap marquee">
-          {/* First set of logos */}
-          {logos.map((logo, index) => (
-            <div 
-              key={`first-${index}`} 
-              className="inline-flex items-center justify-center h-[75px] w-[150px] flex-shrink-0"
+        {/* Gradient Overlays */}
+        <div className="absolute left-0 top-0 w-16 sm:w-24 md:w-28 h-full bg-gradient-to-r from-black via-black/90 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 w-16 sm:w-24 md:w-28 h-full bg-gradient-to-l from-black via-black/90 to-transparent z-10 pointer-events-none" />
+
+        {/* Motion wrapper */}
+        <motion.div
+          className="flex w-max gap-12 sm:gap-16 md:gap-20 lg:gap-24"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 15, // speed (lower = faster, e.g. 10)
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        >
+          {extendedLogos.map((logo, index) => (
+            <div
+              key={index}
+              className="flex-shrink-0 flex items-center justify-center w-32 sm:w-40 md:w-48 lg:w-56 xl:w-60 h-20 sm:h-24 md:h-28 lg:h-32"
             >
               <Image
                 src={logo}
-                alt={`Company logo ${index + 1}`}
-                width={150}
-                height={75}
-                className={`w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity ${
-                  logo.includes('mgid') ? 'max-h-[65px]' : 'max-h-[50px]'
-                }`}
+                alt={`Company logo ${(index % logos.length) + 1}`}
+                width={240}
+                height={120}
+                className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-300 brightness-90 hover:brightness-100"
+                priority={index < logos.length}
               />
             </div>
           ))}
-          
-          {/* Duplicated sets for seamless loop */}
-          {[...Array(4)].map((_, i) => (
-            logos.map((logo, index) => (
-              <div 
-                key={`repeat-${i}-${index}`} 
-                className="inline-flex items-center justify-center h-[75px] w-[150px] flex-shrink-0"
-              >
-                <Image
-                  src={logo}
-                  alt={`Company logo ${index + 1}`}
-                  width={150}
-                  height={75}
-                  className={`w-auto object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity ${
-                    logo.includes('mgid') ? 'max-h-[65px]' : 'max-h-[50px]'
-                  }`}
-                />
-              </div>
-            ))
-          ))}
-        </div>
-        
-        {/* Gradient Overlay - Right */}
-        <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-black to-transparent z-10"></div>
+        </motion.div>
       </div>
-
-      {/* Add CSS for marquee animation */}
-      <style jsx global>{`
-        @keyframes marquee {
-          0% {
-            transform: translate3d(0, 0, 0);
-          }
-          100% {
-            transform: translate3d(-50%, 0, 0);
-          }
-        }
-        
-        .marquee {
-          animation: marquee 5s linear infinite;
-          will-change: transform;
-          display: flex;
-          backface-visibility: hidden;
-          perspective: 1000px;
-          transform: translateZ(0);
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-          .marquee {
-            animation-timing-function: linear;
-          }
-        }
-      `}</style>
     </div>
   );
 };
